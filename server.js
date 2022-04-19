@@ -11,5 +11,5 @@ require('./config/database.config')(CONFIG[env]);
 require('./config/express')(APP);
 require('./config/routes')(APP);
 
-APP.listen(PORT);
+APP.listen(process.env.PORT || 8081);
 console.log(`Server is listening on port ${PORT}`);
