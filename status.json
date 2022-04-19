@@ -1,0 +1,79 @@
+[
+    {
+        "id": 1,
+        "status_type_id": 1,
+        "status_name": "Enrolled",
+        "order_id": 1,
+        "is_active": 1
+    },
+    {
+        "id": 2,
+        "status_type_id": 1,
+        "status_name": "Document Uploaded",
+        "order_id": 2,
+        "is_active": 1
+    },
+    {
+        "id": 3,
+        "status_type_id": 1,
+        "status_name": "Rejected",
+        "order_id": 3,
+        "is_active": 1
+    },
+    {
+        "id": 4,
+        "status_type_id": 1,
+        "status_name": "Approved / Active",
+        "order_id": 4,
+        "is_active": 1
+    },
+    {
+        "id": 5,
+        "status_type_id": 1,
+        "status_name": "Deactived",
+        "order_id": "5",
+        "is_active": 1
+    },
+    {
+        "id": 6,
+        "status_type_id": 2,
+        "status_name": "Activation reason 1",
+        "order_id": 1,
+        "is_active": 1
+    },
+    {
+        "id": 7,
+        "status_type_id": 2,
+        "status_name": "Activation reason 2",
+        "order_id": 2,
+        "is_active": 1
+    },
+    {
+        "id": 8,
+        "status_type_id": 3,
+        "status_name": "Deactivation reason 1",
+        "order_id": 1,
+        "is_active": 1
+    },
+    {
+        "id": 9,
+        "status_type_id": 3,
+        "status_name": "Deactivation reason 2",
+        "order_id": 2,
+        "is_active": 1
+    },
+    {
+        "id": 10,
+        "status_type_id": 4,
+        "status_name": "Rejection reason 1",
+        "order_id": 1,
+        "is_active": 1
+    },
+    {
+        "id": 11,
+        "status_type_id": 4,
+        "status_name": "Rejection reason 2",
+        "order_id": 2,
+        "is_active": 1
+    }
+]
