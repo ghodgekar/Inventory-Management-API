@@ -4,7 +4,7 @@ const NUMBER = MONGOOSE.Schema.Types.Number;
 const DATE = MONGOOSE.Schema.Types.Date;
 
 const DRIVER_SCHEMA = MONGOOSE.Schema({
-    driver_id: { type: NUMBER, required: true, unique: true, default:Math.floor(100000 + Math.random() * 900000) },
+    driver_id: { type: NUMBER, required: true, unique: true},
     driver_name: { type: STRING, required: true },
     driver_phone: { type: NUMBER, required: true, unique: true },
     device_type: { type: NUMBER, required: true },

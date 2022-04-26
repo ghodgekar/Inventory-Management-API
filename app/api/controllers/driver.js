@@ -11,10 +11,10 @@ module.exports = {
                 data: data
             });
         }).catch((err) => {
-            console.log(err);
             return res.status(400).json({
-                message: 'Something went wrong, please try again.'
+                message: err
             });
+            // return res.json(err)
         });
     },
 
@@ -29,7 +29,7 @@ module.exports = {
     },
 
     getSingleDriver: (req, res) => {
-        DRIVER.find({driver_id:req.query.driver_id},(error, data) => {
+        DRIVER.find({$or:[{"driver_status":req.query.driver_status},{"driver_phone":req.query.driver_phone},{"driver_id":req.query.driver_id}]},(error, data) => {
             if (error) {
                 return next(error)
             } else {

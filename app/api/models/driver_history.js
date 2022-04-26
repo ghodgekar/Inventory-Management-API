@@ -6,7 +6,8 @@ const DATE = MONGOOSE.Schema.Types.Date;
 const DRIVER_HISTORY_SCHEMA = MONGOOSE.Schema({
     driver_id: { type: NUMBER, required: true},
     status_type_id: { type: NUMBER, required: true },
-    status_name: { type: STRING, required: true },
+    status_name: { type: NUMBER, required: true },
+    remark: { type: STRING, required: true },
     created: { type: DATE, required: true, default:new Date() }
 });
 

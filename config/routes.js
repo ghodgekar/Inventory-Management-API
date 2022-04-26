@@ -28,6 +28,12 @@ module.exports = (APP) => {
     APP.post('/addDriverHistory', DRIVER_CONTROLLER.addDriverHistory);
     APP.get('/getDriverHistory', DRIVER_CONTROLLER.getDriverHistory);
 
+    var filepath = 'Uploads/Driver/1/1_172865.png'
+
+    APP.get('/img', function (req, res) {
+        res.sendFile(filepath, { root: '.' });
+    })
+
     // APP.post('/user/register', USER_CONTROLLER.register);
     // APP.post('/user/login', USER_CONTROLLER.login);
     // APP.get('/user/profile/:username', AUTH.isAuth, USER_CONTROLLER.getProfile);
