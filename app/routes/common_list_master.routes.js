@@ -11,4 +11,6 @@ module.exports = function(app) {
   app.post("/api/common_list/save", controller.save);
   app.post("/api/common_list/update", controller.update);
   app.post("/api/common_list/delete", controller.delete);
+
+  app.get("/api/common_list_by_code/:code?", controller.codeList);
 };

@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const fileupload = require("express-fileupload");
 const app = express();
 var corsOptions = {
-  origin: "http://localhost:61776"
+  origin: "http://localhost:4200"
 };
 app.use('/uploads', express.static('uploads'));
 
@@ -21,6 +21,9 @@ app.get("/", (req, res) => {
 //routes
 require("./app/config/db.config");
 
+require('./app/routes/login.routes')(app);
+
+//masters
 require('./app/routes/parameter_master.routes')(app);
 require('./app/routes/common_list_master.routes')(app);
 require('./app/routes/module_master.routes')(app);
@@ -46,6 +49,10 @@ require('./app/routes/payment_incl_excl_master.routes')(app);
 require('./app/routes/customer_master.routes')(app);
 require('./app/routes/vendor_master.routes')(app);
 require('./app/routes/item_level_scheme_master.routes')(app);
+
+
+//transaction
+require('./app/routes/opening_stock_transaction.routes')(app);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

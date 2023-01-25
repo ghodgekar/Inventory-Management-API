@@ -1,5 +1,6 @@
 const db = require("../models");
 const UserMaster = db.user_master;
+const Login = db.login;
 
 function validateForm(payload) {
   let errors = {};
@@ -12,9 +13,9 @@ function validateForm(payload) {
     isFormValid = false;
     errors.user_name = 'Please Provide Username.';
   }
-  if (!payload || typeof payload.password !== 'string' || payload.password.trim().length === 0) {
+  if (!payload || typeof payload.user_pass !== 'string' || payload.user_pass.trim().length === 0) {
     isFormValid = false;
-    errors.password = 'Please Provide Password.';
+    errors.user_pass = 'Please Provide Password.';
   }
   if (!payload || typeof payload.role !== 'string' || payload.role.trim().length === 0) {
     isFormValid = false;
@@ -43,6 +44,14 @@ exports.save = (req, res) => {
         errors: validationResult.errors
     });
   }
+  const login = new Login(reqestData);
+  login.save((err, response) => {
+    if (err) {
+    res.status(500).send({ message: err });
+    return;
+    }
+  });
+
   const user = new UserMaster(reqestData);
   user.save((err, response) => {
     if (err) {

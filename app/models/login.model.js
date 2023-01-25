@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
-const UserMaster = mongoose.model(
-  "UserMaster",
+const Login = mongoose.model(
+  "Login",
   new mongoose.Schema({
-    user_code: {type: String, index: true, unique: true},
+    user_code: String,
     user_name: String,
-    user_pass: String,
+    user_pass : String,
     role: String,
     mobile: String,
-    email: String,
+    email : String,
+    decode_pass : String,
     status: {type: String, default: 'Active'},
     created_by: String,
     created_at: {type: Number, default: Date.now},
@@ -17,4 +18,4 @@ const UserMaster = mongoose.model(
     versionKey: false
   })
 );
-module.exports = UserMaster;
+module.exports = Login;

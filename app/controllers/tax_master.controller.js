@@ -72,7 +72,7 @@ exports.list = (req, res) => {
     };
   }else{
     query = {
-      status : 'Yes'
+      status : 'Active'
     };
   }
   TaxMaster.find(query)
@@ -93,7 +93,7 @@ exports.pdf = (req, res) => {
     };
   }else{
     query = {
-      status : 'Yes'
+      status : 'Active'
     };
   }
   TaxMaster.find(query)
@@ -114,7 +114,7 @@ exports.excel = (req, res) => {
     };
   }else{
     query = {
-      status : 'Yes'
+      status : 'Active'
     };
   }
   TaxMaster.find(query)

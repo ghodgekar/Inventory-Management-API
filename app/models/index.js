@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const db = {};
 db.mongoose = mongoose;
+
+db.login = require("./login.model");
+
 db.parameter_master = require("./parameter_master.model");
 db.common_list_master = require("./common_list_master.model");
 db.module_master = require("./module_master.model");
@@ -15,6 +18,7 @@ db.user_master = require("./user_master.model");
 db.user_permission_master = require("./user_permission_master.model");
 
 db.item_master = require("./item_master.model");
+db.item_barcode_master = require("./item_barcode_master.model");
 db.category_master = require("./category_master.model");
 db.category_sub_master = require("./category_sub_master.model");
 db.brand_master = require("./brand_master.model");
@@ -27,5 +31,8 @@ db.payment_incl_excl_master = require("./payment_incl_excl_master.model");
 db.customer_master = require("./customer_master.model");
 db.vendor_master = require("./vendor_master.model");
 db.item_level_scheme_master = require("./item_level_scheme_master.model");
+
+
+db.opening_stock_transaction = require("./opening_stock_transaction.model");
 
 module.exports = db;

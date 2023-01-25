@@ -11,4 +11,7 @@ module.exports = function(app) {
   app.post("/api/parameters/save", controller.save);
   app.post("/api/parameters/update", controller.update);
   app.post("/api/parameters/delete", controller.delete);
+
+  app.get("/api/parametersByCode/:code?", controller.codeList);
+
 };

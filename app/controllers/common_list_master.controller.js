@@ -121,3 +121,19 @@ exports.list = (req, res) => {
   });
 };
 
+exports.codeList = (req, res) => {
+  let query;
+  if(req.params.code){
+    query = {
+      list_code : req.params.code
+    };
+  }
+  CommonListMaster.find(query)
+  .exec((err, response) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    res.status(200).send({ data:response, message: "" });
+  });
+};

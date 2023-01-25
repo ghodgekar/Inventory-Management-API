@@ -1,5 +1,7 @@
 const db = require("../models");
 const ItemMaster = db.item_master;
+const ItemBarcodeMaster = db.item_barcode_master;
+const ItemTaxMaster = db.item_tax_master;
 
 function validateForm(payload) {
   let errors = {};
@@ -19,16 +21,34 @@ exports.save = (req, res) => {
         errors: validationResult.errors
     });
   }
-  const item = new ItemMaster(reqestData);
+  const item = new ItemMaster({item_code: reqestData.item_code, item_name: reqestData.item_name,item_full_name: reqestData.item_full_name,regional_name: reqestData.regional_name,item_UOM: reqestData.item_UOM,item_weight: reqestData.item_weight,item_type: reqestData.item_type,item_parent: reqestData.item_parent,pack_charge: reqestData.pack_charge,on_mrp: reqestData.on_mrp,label_reqd: reqestData.label_reqd,qty_in_case: reqestData.qty_in_case,tax_code: reqestData.tax_code,sub_category_code: reqestData.sub_category_code,category_code: reqestData.category_code,category_type: reqestData.category_type,inventory: reqestData.inventory,brand_code: reqestData.brand_code,manufact_code: reqestData.manufact_code,markup: reqestData.markup,markdown: reqestData.markdown,rate_upd: reqestData.rate_upd,hsn: reqestData.hsn,exp_req: reqestData.exp_req,shelf_life_period: reqestData.shelf_life_period,shelf_life_dm: reqestData.shelf_life_dm,group1: reqestData.group1,group2: reqestData.group2,group3: reqestData.group3,group4: reqestData.group4,created_by:reqestData.created_by});
   item.save((err, response) => {
     if (err) {
-    res.status(500).send({ message: err });
-    return;
-    }else {
-    res.status(200).send({ data: response, message: "Data Saved Successfully In item Master" });
-    return;    
+    return res.status(500).send({ message: err });
     }
   });
+
+  const itemtax = new ItemTaxMaster({item_code: reqestData.item_code, tax_code: reqestData.tax_code, start_date:new Date(), end_date:new Date(), state_code:'Maharashtra'});
+  itemtax.save((err, response) => {
+    if (err) {
+    res.status(500).send({ message: itemtax });
+    return;
+    }
+  });
+
+  reqestData.barcodes.forEach(element => {
+    const itembarcode = new ItemBarcodeMaster({item_code: reqestData.item_code, barcode: element.barcode, created_by: reqestData.created_by});
+    itembarcode.save((err, response) => {
+      if (err) {
+      res.status(500).send({ message: itembarcode });
+      return;
+      }
+    });
+  });
+  
+  res.status(200).send({ data: '', message: "Data Saved Successfully In item Master" });
+  return;
+  
 };
 
 exports.update = (req, res) => {
@@ -40,15 +60,33 @@ exports.update = (req, res) => {
         errors: validationResult.errors
     });
   }
-  ItemMaster.findByIdAndUpdate({_id:reqestData._id},reqestData,{ new: true },(err, response) => {
+  ItemMaster.findByIdAndUpdate({_id:reqestData._id},{item_code: reqestData.item_code, item_name: reqestData.item_name,item_full_name: reqestData.item_full_name,regional_name: reqestData.regional_name,item_UOM: reqestData.item_UOM,item_weight: reqestData.item_weight,item_type: reqestData.item_type,item_parent: reqestData.item_parent,pack_charge: reqestData.pack_charge,on_mrp: reqestData.on_mrp,label_reqd: reqestData.label_reqd,qty_in_case: reqestData.qty_in_case,tax_code: reqestData.tax_code,sub_category_code: reqestData.sub_category_code,category_code: reqestData.category_code,category_type: reqestData.category_type,inventory: reqestData.inventory,brand_code: reqestData.brand_code,manufact_code: reqestData.manufact_code,markup: reqestData.markup,markdown: reqestData.markdown,rate_upd: reqestData.rate_upd,hsn: reqestData.hsn,exp_req: reqestData.exp_req,shelf_life_period: reqestData.shelf_life_period,shelf_life_dm: reqestData.shelf_life_dm,group1: reqestData.group1,group2: reqestData.group2,group3: reqestData.group3,group4: reqestData.group4,created_by:reqestData.created_by},{ new: true },(err, response) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
-    }else{
-      res.status(200).send({ data:response, message: "Data Updated Successfully In item Master"  });
+    }
+  });
+
+  ItemBarcodeMaster.findByIdAndUpdate({item_code:reqestData.item_code}, {status : 'Inactive'} ,{ new: true },(err, response) => {
+    if (err) {
+      res.status(500).send({ message: err });
       return;
     }
   });
+
+  reqestData.barcodes.forEach(element => {
+    const itembarcode = new ItemBarcodeMaster({item_code: reqestData.item_code, barcode: element.barcode, created_by: reqestData.created_by});
+    itembarcode.save((err, response) => {
+      if (err) {
+      res.status(500).send({ message: itembarcode });
+      return;
+      }
+    });
+  });
+  
+  res.status(200).send({ data: '', message: "Data Updated Successfully In item Master" });
+  return;
+
 };
 
 exports.delete = (req, res) => {

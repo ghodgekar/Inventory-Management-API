@@ -32,7 +32,6 @@ const ItemMaster = mongoose.model(
     group2: String,
     group3: String,
     group4: String,
-    barcode: String,
     status: {type: String, default: 'Active'},
     created_by: String,
     created_at: {type: Number, default: Date.now},
