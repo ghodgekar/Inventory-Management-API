@@ -53,7 +53,7 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
   let reqestData = req.body;
-  CategoryMaster.findByIdAndUpdate({_id:reqestData._id}, {status: 0} ,{ new: true },(err, response) => {
+  CategoryMaster.findByIdAndUpdate({_id:reqestData._id}, {status : 'Inactive'} ,{ new: true },(err, response) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
@@ -72,7 +72,7 @@ exports.list = (req, res) => {
     };
   }else{
     query = {
-      status : 'Yes'
+      status : 'Active'
     };
   }
   CategoryMaster.find(query)
@@ -93,7 +93,7 @@ exports.pdf = (req, res) => {
     };
   }else{
     query = {
-      status : 'Yes'
+      status : 'Active'
     };
   }
   CategoryMaster.find(query)
@@ -114,7 +114,7 @@ exports.excel = (req, res) => {
     };
   }else{
     query = {
-      status : 'Yes'
+      status : 'Active'
     };
   }
   CategoryMaster.find(query)

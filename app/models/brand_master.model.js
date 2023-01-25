@@ -1,16 +1,17 @@
 const mongoose = require("mongoose");
-const ParameterMaster = mongoose.model(
-  "ParameterMaster",
+const BrandMaster = mongoose.model(
+  "BrandMaster",
   new mongoose.Schema({
-    param_code: {type: String, index: true, unique: true},
-    param_value: String,
-    param_desc: String,
-    data_type: String,
-    status: {type: Number, default: 1},
+    brand_code: String,
+    brand_name: String,
+    manufact_code: String,
+    status: {type: String, default: 'Active'},
     created_by: String,
-    created_at: {type: Number, default: Date.now}
+    created_at: {type: Number, default: Date.now},
+    updated_by: {type: String, default: null},
+    updated_at: {type: Number, default: Date.now}
   },{
     versionKey: false
   })
 );
-module.exports = ParameterMaster;
+module.exports = BrandMaster;

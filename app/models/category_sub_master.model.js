@@ -9,7 +9,7 @@ const CategorySubMaster = mongoose.model(
     markdown: String,
     shelf_life_p: String,
     shelf_life_dm: String,
-    status: {type: String, default: 'Yes'},
+    status: {type: String, default: 'Active'},
     created_by: String,
     created_at: {type: Number, default: Date.now},
     updated_by: {type: String, default: null},

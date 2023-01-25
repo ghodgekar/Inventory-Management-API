@@ -13,10 +13,10 @@ const TaxMaster = mongoose.model(
     utgst: String,
     cess: String,
     cessperpiece: String,
-    status: {type: String, default: 'Yes'},
+    status: {type: String, default: 'Active'},
     created_by: String,
-    updated_by: {type: String, default: null},
     created_at: {type: Number, default: Date.now},
+    updated_by: {type: String, default: null},
     updated_at: {type: Number, default: Date.now}
   },{
     versionKey: false

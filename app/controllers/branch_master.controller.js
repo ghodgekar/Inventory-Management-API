@@ -4,30 +4,6 @@ const BranchMaster = db.branch_master;
 function validateForm(payload) {
   let errors = {};
   let isFormValid = true;
-  if (!payload || typeof payload.list_code !== 'string' || payload.list_code.trim().length === 0) {
-    isFormValid = false;
-    errors.list_code = 'Please Provide Common List Code.';
-  }
-  if (!payload || typeof payload.list_value !== 'string' || payload.list_value.trim().length === 0) {
-    isFormValid = false;
-    errors.list_value = 'Please Provide Common List Value.';
-  }
-  if (!payload || typeof payload.list_desc !== 'string' || payload.list_desc.trim().length === 0) {
-    isFormValid = false;
-    errors.list_desc = 'Please Provide Common List Description.';
-  }
-  if (!payload || typeof payload.order_by !== 'string' || payload.order_by.trim().length === 0) {
-    isFormValid = false;
-    errors.order_by = 'Please Provide Data Type.';
-  }
-  if (!payload || typeof payload.loc_code !== 'string' || payload.loc_code.trim().length === 0) {
-    isFormValid = false;
-    errors.loc_code = 'Please Provide Data Type.';
-  }
-  if (!payload || typeof payload.status !== 'string' || payload.status.trim().length === 0) {
-    isFormValid = false;
-    errors.status = 'Please Provide Data Type.';
-  }
   return {
       success: isFormValid,
       errors
@@ -93,7 +69,7 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
   let reqestData = req.body;
-  BranchMaster.findByIdAndUpdate({_id:reqestData._id}, {status: 0} ,{ new: true },(err, response) => {
+  BranchMaster.findByIdAndUpdate({_id:reqestData._id}, {status : 'Inactive'} ,{ new: true },(err, response) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
@@ -112,7 +88,7 @@ exports.list = (req, res) => {
     };
   }else{
     query = {
-      status : 1
+      status : 'Active'
     };
   }
   BranchMaster.find(query)

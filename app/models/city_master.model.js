@@ -1,13 +1,9 @@
 const mongoose = require("mongoose");
-const ModuleMaster = mongoose.model(
-  "ModuleMaster",
+const CityMaster = mongoose.model(
+  "CityMaster",
   new mongoose.Schema({
-    module_code: String,
-    module_name: String,
-    module_slug: String,
-    parent_madule_code: String,
-    module_image: String,
-    is_home: String,
+    city_name: {type: String, index: true, unique: true},
+    state_code: String,
     status: {type: String, default: 'Active'},
     created_by: String,
     created_at: {type: Number, default: Date.now},
@@ -17,4 +13,4 @@ const ModuleMaster = mongoose.model(
     versionKey: false
   })
 );
-module.exports = ModuleMaster;
+module.exports = CityMaster;

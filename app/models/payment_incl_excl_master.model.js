@@ -1,13 +1,11 @@
 const mongoose = require("mongoose");
-const ModuleMaster = mongoose.model(
-  "ModuleMaster",
+const PaymentInclExclMaster = mongoose.model(
+  "PaymentInclExclMaster",
   new mongoose.Schema({
-    module_code: String,
-    module_name: String,
-    module_slug: String,
-    parent_madule_code: String,
-    module_image: String,
-    is_home: String,
+    pmt_code: String,
+    trans_type: String,
+    trans_code: String,
+    incl_excl: String,
     status: {type: String, default: 'Active'},
     created_by: String,
     created_at: {type: Number, default: Date.now},
@@ -17,4 +15,4 @@ const ModuleMaster = mongoose.model(
     versionKey: false
   })
 );
-module.exports = ModuleMaster;
+module.exports = PaymentInclExclMaster;

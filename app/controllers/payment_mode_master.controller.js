@@ -1,5 +1,5 @@
 const db = require("../models");
-const ItemMaster = db.item_master;
+const PaymentModeMaster = db.payment_mode_master;
 
 function validateForm(payload) {
   let errors = {};
@@ -19,13 +19,13 @@ exports.save = (req, res) => {
         errors: validationResult.errors
     });
   }
-  const item = new ItemMaster(reqestData);
-  item.save((err, response) => {
+  const paymentmode = new PaymentModeMaster(reqestData);
+  paymentmode.save((err, response) => {
     if (err) {
     res.status(500).send({ message: err });
     return;
     }else {
-    res.status(200).send({ data: response, message: "Data Saved Successfully In item Master" });
+    res.status(200).send({ data: response, message: "Data Saved Successfully In paymentmode Master" });
     return;    
     }
   });
@@ -40,12 +40,12 @@ exports.update = (req, res) => {
         errors: validationResult.errors
     });
   }
-  ItemMaster.findByIdAndUpdate({_id:reqestData._id},reqestData,{ new: true },(err, response) => {
+  PaymentModeMaster.findByIdAndUpdate({_id:reqestData._id},reqestData,{ new: true },(err, response) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     }else{
-      res.status(200).send({ data:response, message: "Data Updated Successfully In item Master"  });
+      res.status(200).send({ data:response, message: "Data Updated Successfully In paymentmode Master"  });
       return;
     }
   });
@@ -53,12 +53,12 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
   let reqestData = req.body;
-  ItemMaster.findByIdAndUpdate({_id:reqestData._id}, {status : 'Inactive'} ,{ new: true },(err, response) => {
+  PaymentModeMaster.findByIdAndUpdate({_id:reqestData._id}, {status : 'Inactive'} ,{ new: true },(err, response) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     }else{
-      res.status(200).send({ message: "Data Deleted In item Master"  });
+      res.status(200).send({ message: "Data Deleted In paymentmode Master"  });
       return;
     }
   });
@@ -75,7 +75,7 @@ exports.list = (req, res) => {
       status : 'Active'
     };
   }
-  ItemMaster.find(query)
+  PaymentModeMaster.find(query)
   .exec((err, response) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -96,7 +96,7 @@ exports.pdf = (req, res) => {
       status : 'Active'
     };
   }
-  ItemMaster.find(query)
+  PaymentModeMaster.find(query)
   .exec((err, response) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -117,7 +117,7 @@ exports.excel = (req, res) => {
       status : 'Active'
     };
   }
-  ItemMaster.find(query)
+  PaymentModeMaster.find(query)
   .exec((err, response) => {
     if (err) {
       res.status(500).send({ message: err });

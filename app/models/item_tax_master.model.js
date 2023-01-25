@@ -1,13 +1,12 @@
 const mongoose = require("mongoose");
-const ModuleMaster = mongoose.model(
-  "ModuleMaster",
+const ItemTaxMaster = mongoose.model(
+  "ItemTaxMaster",
   new mongoose.Schema({
-    module_code: String,
-    module_name: String,
-    module_slug: String,
-    parent_madule_code: String,
-    module_image: String,
-    is_home: String,
+    item_code: String,
+    tax_code: String,
+    start_date: String,
+    end_date: String,
+    state_code: String,
     status: {type: String, default: 'Active'},
     created_by: String,
     created_at: {type: Number, default: Date.now},
@@ -17,4 +16,4 @@ const ModuleMaster = mongoose.model(
     versionKey: false
   })
 );
-module.exports = ModuleMaster;
+module.exports = ItemTaxMaster;

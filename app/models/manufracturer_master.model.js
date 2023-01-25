@@ -1,13 +1,10 @@
 const mongoose = require("mongoose");
-const ModuleMaster = mongoose.model(
-  "ModuleMaster",
+const ManufracturerMaster = mongoose.model(
+  "ManufracturerMaster",
   new mongoose.Schema({
-    module_code: String,
-    module_name: String,
-    module_slug: String,
-    parent_madule_code: String,
-    module_image: String,
-    is_home: String,
+    manufact_code: String,
+    manufact_name: String,
+    type : String,
     status: {type: String, default: 'Active'},
     created_by: String,
     created_at: {type: Number, default: Date.now},
@@ -17,4 +14,4 @@ const ModuleMaster = mongoose.model(
     versionKey: false
   })
 );
-module.exports = ModuleMaster;
+module.exports = ManufracturerMaster;

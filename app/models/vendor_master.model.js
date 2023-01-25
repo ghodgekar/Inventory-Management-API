@@ -1,22 +1,24 @@
 const mongoose = require("mongoose");
-const BranchMaster = mongoose.model(
-  "BranchMaster",
+const VendorMaster = mongoose.model(
+  "VendorMaster",
   new mongoose.Schema({
-    loc_code: {type: String, index: true, unique: true},
-    loc_no: String,
-    loc_name: String,
-    comp_code: String,
+    vend_code: {type: String, index: true, unique: true},
+    vend_name: String,
+    type: String,
+    credit_day: String,
     addr1: String,
     addr2: String,
     city: String,
     state: String,
     country: String,
-    pin: String,
+    pin_no: String,
     phone: String,
+    email: String,
     gstin: String,
-    bank_name: String,
-    bank_ac_no: String,
-    image: String,
+    fassi_no: String,
+    aadhar_no: String,
+    pan_no: String,
+    contact_person: String,
     status: {type: String, default: 'Active'},
     created_by: String,
     created_at: {type: Number, default: Date.now},
@@ -26,4 +28,4 @@ const BranchMaster = mongoose.model(
     versionKey: false
   })
 );
-module.exports = BranchMaster;
+module.exports = VendorMaster;

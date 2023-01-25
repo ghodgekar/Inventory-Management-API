@@ -53,7 +53,7 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
   let reqestData = req.body;
-  ModuleMaster.findByIdAndUpdate({_id:reqestData._id}, {status: 0} ,{ new: true },(err, response) => {
+  ModuleMaster.findByIdAndUpdate({_id:reqestData._id}, {status : 'Inactive'} ,{ new: true },(err, response) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
@@ -73,12 +73,12 @@ exports.list = (req, res) => {
   }
   ModuleMaster.find(query)
   .exec((err, response) => {
-    response.forEach(val => {
-      if(val['parent_madule_code'] == Object(val['_id'])){
-        console.log(val['module_name'])
-        response['parent_module_name'] = val['module_name'];
-      }
-    })
+    // response.forEach(val => {
+    //   if(val['parent_madule_code'] == Object(val['_id'])){
+    //     console.log(val['module_name'])
+    //     response['parent_module_name'] = val['module_name'];
+    //   }
+    // })
     if (err) {
       res.status(500).send({ message: err });
       return;
@@ -139,9 +139,9 @@ exports.parent_menu = (req, res) => {
 
 
 
-exports.test = async (req, res) => {
-  var initial = ModuleMaster.find();
-  var menutree = await ModuleMaster.GetMenuTree(initial, null, '5dfe0009551b160edcdc89ce');
-  res.status(200).send({ data:response, response: "" });
-};
+// exports.test = async (req, res) => {
+//   var initial = ModuleMaster.find();
+//   var menutree = await ModuleMaster.GetMenuTree(initial, null, '5dfe0009551b160edcdc89ce');
+//   res.status(200).send({ data:response, response: "" });
+// };
 

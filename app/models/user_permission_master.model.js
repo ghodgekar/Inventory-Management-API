@@ -8,6 +8,7 @@ const UserPermissionMaster = mongoose.model(
     is_entry: String,
     is_modify: String,
     is_auth: String,
+    status: {type: String, default: 'Active'},
     created_by: String,
     created_at: {type: Number, default: Date.now},
     updated_by: {type: String, default: null},

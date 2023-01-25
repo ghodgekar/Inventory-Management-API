@@ -1,25 +1,9 @@
 const db = require("../models");
-const ParameterMaster = db.parameter_master;
+const ItemLevelSchemeMaster = db.item_level_scheme_master;
 
 function validateForm(payload) {
   let errors = {};
   let isFormValid = true;
-  if (!payload || typeof payload.param_code !== 'string' || payload.param_code.trim().length === 0) {
-    isFormValid = false;
-    errors.param_code = 'Please Provide Parameter Code.';
-  }
-  if (!payload || typeof payload.param_value !== 'string' || payload.param_value.trim().length === 0) {
-    isFormValid = false;
-    errors.param_value = 'Please Provide Parameter Value.';
-  }
-  if (!payload || typeof payload.param_desc !== 'string' || payload.param_desc.trim().length === 0) {
-    isFormValid = false;
-    errors.param_desc = 'Please Provide Parameter Description.';
-  }
-  if (!payload || typeof payload.data_type !== 'string' || payload.data_type.trim().length === 0) {
-    isFormValid = false;
-    errors.data_type = 'Please Provide Data Type.';
-  }
   return {
       success: isFormValid,
       errors
@@ -35,21 +19,13 @@ exports.save = (req, res) => {
         errors: validationResult.errors
     });
   }
-  // ParameterMaster.find({param_code : reqestData.param_code})
-  // .exec((err, response) => {
-  //   if (err) {
-  //     res.status(500).send({ message: err });
-  //     return;
-  //   }
-  //   res.status(200).send({ message: "Parameter Code Must Be Unique" });
-  // });
-  const parameter = new ParameterMaster(reqestData);
-  parameter.save((err, response) => {
+  const item_level_scheme = new ItemLevelSchemeMaster(reqestData);
+  item_level_scheme.save((err, response) => {
     if (err) {
     res.status(500).send({ message: err });
     return;
     }else {
-    res.status(200).send({ data: response, message: "Data Saved Successfully In Parameter Master" });
+    res.status(200).send({ data: response, message: "Data Saved Successfully In item_level_scheme Master" });
     return;    
     }
   });
@@ -64,20 +40,12 @@ exports.update = (req, res) => {
         errors: validationResult.errors
     });
   }
-  // ParameterMaster.find({param_code : reqestData.param_code})
-  // .exec((err, response) => {
-  //   if (err) {
-  //     res.status(500).send({ message: err });
-  //     return;
-  //   }
-  //   res.status(200).send({ message: "Parameter Code Must Be Unique" });
-  // });
-  ParameterMaster.findByIdAndUpdate({_id:reqestData._id},reqestData,{ new: true },(err, response) => {
+  ItemLevelSchemeMaster.findByIdAndUpdate({_id:reqestData._id},reqestData,{ new: true },(err, response) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     }else{
-      res.status(200).send({ data:response, message: "Data Updated Successfully In Parameter Master"  });
+      res.status(200).send({ data:response, message: "Data Updated Successfully In item_level_scheme Master"  });
       return;
     }
   });
@@ -85,12 +53,12 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
   let reqestData = req.body;
-  ParameterMaster.findByIdAndUpdate({_id:reqestData._id}, {status: 0} ,{ new: true },(err, response) => {
+  ItemLevelSchemeMaster.findByIdAndUpdate({_id:reqestData._id}, {status : 'Inactive'} ,{ new: true },(err, response) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     }else{
-      res.status(200).send({ message: "Data Deleted In Parameter Master"  });
+      res.status(200).send({ message: "Data Deleted In item_level_scheme Master"  });
       return;
     }
   });
@@ -104,10 +72,10 @@ exports.list = (req, res) => {
     };
   }else{
     query = {
-      status : 1
+      status : 'Active'
     };
   }
-  ParameterMaster.find(query)
+  ItemLevelSchemeMaster.find(query)
   .exec((err, response) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -125,10 +93,10 @@ exports.pdf = (req, res) => {
     };
   }else{
     query = {
-      status : 1
+      status : 'Active'
     };
   }
-  ParameterMaster.find(query)
+  ItemLevelSchemeMaster.find(query)
   .exec((err, response) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -146,10 +114,10 @@ exports.excel = (req, res) => {
     };
   }else{
     query = {
-      status : 1
+      status : 'Active'
     };
   }
-  ParameterMaster.find(query)
+  ItemLevelSchemeMaster.find(query)
   .exec((err, response) => {
     if (err) {
       res.status(500).send({ message: err });

@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const CompanyMaster = mongoose.model(
   "CompanyMaster",
   new mongoose.Schema({
-    comp_id: String, 
     comp_code: String, 
     comp_name: String, 
     type: String, 
@@ -16,23 +15,22 @@ const CompanyMaster = mongoose.model(
     phone: String, 
     mobile: String, 
     gstin: String, 
-    fassano: String, 
-    cinno: String, 
-    panno: String, 
-    tanno: String, 
-    lsttinpinno: String, 
-    cstno: String, 
-    coregnno: String, 
+    fassa_no: String, 
+    cin_no: String, 
+    pan_no: String, 
+    tan_no: String, 
+    lsttinpin_no: String, 
+    cst_no: String, 
+    coregn_no: String, 
     coregndate: String, 
-    druglicno: String, 
+    druglic_no: String, 
     importexport: String, 
     company_image: String, 
-    status: String, 
+    status: {type: String, default: 'Active'},
     created_by: String,
-    updated_by: {type: String, default: null},
     created_at: {type: Number, default: Date.now},
+    updated_by: {type: String, default: null},
     updated_at: {type: Number, default: Date.now}
-
   },{
     versionKey: false
   })

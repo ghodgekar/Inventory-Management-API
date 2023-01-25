@@ -85,7 +85,7 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
   let reqestData = req.body;
-  ParameterMaster.findByIdAndUpdate({_id:reqestData._id}, {status: 0} ,{ new: true },(err, response) => {
+  ParameterMaster.findByIdAndUpdate({_id:reqestData._id}, {status : 'Inactive'} ,{ new: true },(err, response) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
@@ -104,7 +104,7 @@ exports.list = (req, res) => {
     };
   }else{
     query = {
-      status : 1
+      status : 'Active'
     };
   }
   ParameterMaster.find(query)
@@ -125,7 +125,7 @@ exports.pdf = (req, res) => {
     };
   }else{
     query = {
-      status : 1
+      status : 'Active'
     };
   }
   ParameterMaster.find(query)
@@ -146,7 +146,7 @@ exports.excel = (req, res) => {
     };
   }else{
     query = {
-      status : 1
+      status : 'Active'
     };
   }
   ParameterMaster.find(query)

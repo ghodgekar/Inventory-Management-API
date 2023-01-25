@@ -1,5 +1,5 @@
 const db = require("../models");
-const ItemMaster = db.item_master;
+const ManufracturerMaster = db.manufracturer_master;
 
 function validateForm(payload) {
   let errors = {};
@@ -19,13 +19,21 @@ exports.save = (req, res) => {
         errors: validationResult.errors
     });
   }
-  const item = new ItemMaster(reqestData);
-  item.save((err, response) => {
+  // ManufracturerMaster.find({param_code : reqestData.param_code})
+  // .exec((err, response) => {
+  //   if (err) {
+  //     res.status(500).send({ message: err });
+  //     return;
+  //   }
+  //   res.status(200).send({ message: "manufracturer Code Must Be Unique" });
+  // });
+  const manufracturer = new ManufracturerMaster(reqestData);
+  manufracturer.save((err, response) => {
     if (err) {
     res.status(500).send({ message: err });
     return;
     }else {
-    res.status(200).send({ data: response, message: "Data Saved Successfully In item Master" });
+    res.status(200).send({ data: response, message: "Data Saved Successfully In manufracturer Master" });
     return;    
     }
   });
@@ -40,12 +48,20 @@ exports.update = (req, res) => {
         errors: validationResult.errors
     });
   }
-  ItemMaster.findByIdAndUpdate({_id:reqestData._id},reqestData,{ new: true },(err, response) => {
+  // ManufracturerMaster.find({param_code : reqestData.param_code})
+  // .exec((err, response) => {
+  //   if (err) {
+  //     res.status(500).send({ message: err });
+  //     return;
+  //   }
+  //   res.status(200).send({ message: "manufracturer Code Must Be Unique" });
+  // });
+  ManufracturerMaster.findByIdAndUpdate({_id:reqestData._id},reqestData,{ new: true },(err, response) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     }else{
-      res.status(200).send({ data:response, message: "Data Updated Successfully In item Master"  });
+      res.status(200).send({ data:response, message: "Data Updated Successfully In manufracturer Master"  });
       return;
     }
   });
@@ -53,12 +69,12 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
   let reqestData = req.body;
-  ItemMaster.findByIdAndUpdate({_id:reqestData._id}, {status : 'Inactive'} ,{ new: true },(err, response) => {
+  ManufracturerMaster.findByIdAndUpdate({_id:reqestData._id}, {status : 'Inactive'} ,{ new: true },(err, response) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     }else{
-      res.status(200).send({ message: "Data Deleted In item Master"  });
+      res.status(200).send({ message: "Data Deleted In manufracturer Master"  });
       return;
     }
   });
@@ -75,7 +91,7 @@ exports.list = (req, res) => {
       status : 'Active'
     };
   }
-  ItemMaster.find(query)
+  ManufracturerMaster.find(query)
   .exec((err, response) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -96,7 +112,7 @@ exports.pdf = (req, res) => {
       status : 'Active'
     };
   }
-  ItemMaster.find(query)
+  ManufracturerMaster.find(query)
   .exec((err, response) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -117,7 +133,7 @@ exports.excel = (req, res) => {
       status : 'Active'
     };
   }
-  ItemMaster.find(query)
+  ManufracturerMaster.find(query)
   .exec((err, response) => {
     if (err) {
       res.status(500).send({ message: err });

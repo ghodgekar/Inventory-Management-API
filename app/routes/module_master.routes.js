@@ -7,7 +7,7 @@ module.exports = function(app) {
     );
     next();
   });
-  app.get("/api/module/parent_menu", controller.test);
+  app.get("/api/module/parent_menu", controller.parent_menu);
   app.get("/api/module/menu", controller.menu);
   app.get("/api/module/:id?", controller.list);
   app.post("/api/module/save", controller.save);

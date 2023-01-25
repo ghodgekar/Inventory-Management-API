@@ -7,7 +7,7 @@ const CategoryMaster = mongoose.model(
     category_type: String,
     group: String,
     inventory: String,
-    status: {type: String, default: 'Yes'},
+    status: {type: String, default: 'Active'},
     created_by: String,
     created_at: {type: Number, default: Date.now},
     updated_by: {type: String, default: null},

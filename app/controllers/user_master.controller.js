@@ -43,13 +43,13 @@ exports.save = (req, res) => {
         errors: validationResult.errors
     });
   }
-  const parameter = new UserMaster(reqestData);
-  parameter.save((err, response) => {
+  const user = new UserMaster(reqestData);
+  user.save((err, response) => {
     if (err) {
     res.status(500).send({ message: err });
     return;
     }else {
-    res.status(200).send({ data: response, message: "Data Saved Successfully In Parameter Master" });
+    res.status(200).send({ data: response, message: "Data Saved Successfully In user Master" });
     return;    
     }
   });
@@ -69,7 +69,7 @@ exports.update = (req, res) => {
       res.status(500).send({ message: err });
       return;
     }else{
-      res.status(200).send({ data:response, message: "Data Updated Successfully In Parameter Master"  });
+      res.status(200).send({ data:response, message: "Data Updated Successfully In user Master"  });
       return;
     }
   });
@@ -77,12 +77,12 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
   let reqestData = req.body;
-  UserMaster.findByIdAndUpdate({_id:reqestData._id}, {status: 0} ,{ new: true },(err, response) => {
+  UserMaster.findByIdAndUpdate({_id:reqestData._id}, {status : 'Inactive'} ,{ new: true },(err, response) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     }else{
-      res.status(200).send({ message: "Data Deleted In Parameter Master"  });
+      res.status(200).send({ message: "Data Deleted In user Master"  });
       return;
     }
   });
