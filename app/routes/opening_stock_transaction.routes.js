@@ -12,6 +12,6 @@ module.exports = function(app) {
   app.post("/api/opening_stock/update", controller.update);
   app.post("/api/opening_stock/delete", controller.delete);
 
-  app.get("/api/opening_stockByCode/:code?", controller.codeList);
+  app.get("/api/getitemdetials/:barcode?", controller.barcodeList);
 
 };
