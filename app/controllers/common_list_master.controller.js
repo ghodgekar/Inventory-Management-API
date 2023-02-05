@@ -16,10 +16,6 @@ function validateForm(payload) {
     isFormValid = false;
     errors.list_desc = 'Please Provide Common List Description.';
   }
-  if (!payload || typeof payload.order_by !== 'string' || payload.order_by.trim().length === 0) {
-    isFormValid = false;
-    errors.order_by = 'Please Provide Order By.';
-  }
   if (!payload || typeof payload.loc_code !== 'string' || payload.loc_code.trim().length === 0) {
     isFormValid = false;
     errors.loc_code = 'Please Provide Location.';
@@ -39,24 +35,25 @@ exports.save = (req, res) => {
         errors: validationResult.errors
     });
   }
-//   CommonListMaster.find({list_code : reqestData.list_code})
-//   .exec((err, response) => {
-//     if (err) {
-//       res.status(500).send({ message: err });
-//       return;
-//     }
-//     res.status(200).send({ message: "Common List Code Must Be Unique" });
-//   });
+  // CommonListMaster.find({list_code : reqestData.list_code, list_value : reqestData.list_value})
+  // .exec((err, response) => {
+  //   if (err) {
+  //     return res.status(400).json({ message: err });
+  //   }
+  //   if(response)
+  //   return res.status(400).json({ message: "Common List Code and List Value Must Be Unique" });
+  // });
+
   const common_list = new CommonListMaster(reqestData);
   common_list.save((err, response) => {
     if (err) {
     res.status(500).send({ message: err });
     return;
     }else {
-    res.status(200).send({ data: response, message: "Data Saved Successfully In Common List Master" });
-    return;    
+    return res.status(200).send({ data: response, message: "Data Saved Successfully In Common List Master" });   
     }
   });
+
 };
 
 exports.update = (req, res) => {

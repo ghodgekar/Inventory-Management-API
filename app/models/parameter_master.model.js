@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 const ParameterMaster = mongoose.model(
   "ParameterMaster",
   new mongoose.Schema({
-    param_code: {type: String},
+    param_code: {type: String, unique: true},
     param_value: String,
     param_desc: String,
-    data_type: String,
+    data_type: {type: String, default: null},
     status: {type: String, default: 'Active'},
     created_by: String,
     created_at: {type: Number, default: Date.now},

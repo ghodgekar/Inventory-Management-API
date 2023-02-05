@@ -5,7 +5,7 @@ const CommonListMaster = mongoose.model(
     list_code: String,
     list_value: String,
     list_desc: String,
-    order_by: Number,
+    order_by: {type: Number, default: null},
     loc_code: String,
     status: {type: String, default: 'Active'},
     created_by: String,

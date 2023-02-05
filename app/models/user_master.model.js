@@ -1,3 +1,5 @@
+const date = require('date-and-time');
+const currentDateTime = date.format(new Date(),'YYYY/MM/DD HH:mm:ss');
 const mongoose = require("mongoose");
 const UserMaster = mongoose.model(
   "UserMaster",
@@ -10,9 +12,9 @@ const UserMaster = mongoose.model(
     email: String,
     status: {type: String, default: 'Active'},
     created_by: String,
-    created_at: {type: Number, default: Date.now},
+    created_at: {type: Date, default: currentDateTime},
     updated_by: {type: String, default: null},
-    updated_at: {type: Number, default: Date.now}
+    updated_at: {type: Date, default: currentDateTime}
   },{
     versionKey: false
   })
