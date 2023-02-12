@@ -1,12 +1,27 @@
 const db = require("../models");
 const CityMaster = db.city_master;
 
+const Joi = require('joi');
+
 function validateForm(payload) {
+  const schema = Joi.object({
+    city: Joi.string().regex(/^[A-Z]+$/).required(),
+    state_code: Joi.required(),
+  });
+
+  const { error } = schema.validate(payload);
+
   let errors = {};
-  let isFormValid = true;
+  if (error) {
+    isFormValid = false;
+    error.details.forEach((err) => {
+      errors[err.context.key] = err.message;
+    });
+  }
+
   return {
-      success: isFormValid,
-      errors
+    success: isFormValid,
+    errors,
   };
 }
 

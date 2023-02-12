@@ -1,12 +1,27 @@
 const db = require("../models");
 const CountryMaster = db.country_master;
+const Joi = require('joi');
 
 function validateForm(payload) {
+  const schema = Joi.object({
+    country_code: Joi.string().regex(/^[A-Z]+$/).required(),
+    country_name: Joi.string().regex(/^[A-Z][a-zA-Z]*$/).required(),
+    currency_code: Joi.required(),
+  });
+
+  const { error } = schema.validate(payload);
+
   let errors = {};
-  let isFormValid = true;
+  if (error) {
+    isFormValid = false;
+    error.details.forEach((err) => {
+      errors[err.context.key] = err.message;
+    });
+  }
+
   return {
-      success: isFormValid,
-      errors
+    success: isFormValid,
+    errors,
   };
 }
 
