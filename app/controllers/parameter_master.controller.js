@@ -35,22 +35,25 @@ exports.save = (req, res) => {
         errors: validationResult.errors
     });
   }
-  // ParameterMaster.find({param_code : reqestData.param_code})
-  // .exec((err, response) => {
-  //   if (err) {
-  //     res.status(500).send({ message: err });
-  //     return;
-  //   }
-  //   res.status(200).send({ message: "Parameter Code Must Be Unique" });
-  // });
-  const parameter = new ParameterMaster(reqestData);
-  parameter.save((err, response) => {
+  ParameterMaster.find({param_code : reqestData.param_code})
+  .exec((err, response) => {
     if (err) {
-    res.status(500).send({ message: err });
-    return;
-    }else {
-    res.status(200).send({ data: response, message: "Data Saved Successfully In Parameter Master" });
-    return;    
+      res.status(500).send({ message: err });
+      return;
+    }
+    if(response){
+      return res.status(422).send({ message: "Parameter Code Must Be Unique" });
+    }else{
+      const parameter = new ParameterMaster(reqestData);
+      parameter.save((err, response) => {
+        if (err) {
+        res.status(500).send({ message: err });
+        return;
+        }else {
+        res.status(200).send({ data: response, message: "Data Saved Successfully In Parameter Master" });
+        return;    
+        }
+      });
     }
   });
 };

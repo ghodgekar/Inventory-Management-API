@@ -1,7 +1,7 @@
 const db = require("../models");
 const CityMaster = db.city_master;
 
-const Joi = require('joi');
+// const Joi = require('joi');
 
 function validateForm(payload) {
   const schema = Joi.object({
