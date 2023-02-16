@@ -1,5 +1,7 @@
 const db = require("../models");
 const CityMaster = db.city_master;
+const StateMaster = db.state_master;
+const CountryMaster = db.country_master;
 
 // const Joi = require('joi');
 
@@ -139,6 +141,28 @@ exports.excel = (req, res) => {
       return;
     }
     res.status(200).send({ data:response, message: "" });
+  });
+};
+
+exports.getStateCountry = (req, res) => {
+  CityMaster.find({city_name : req.params.city_name})
+  .exec((err, response) => {
+    if (err) {
+      return res.status(400).json({ message: err });
+    }
+    StateMaster.find({state_code : response[0].state_code})
+    .exec((err1, response1) => {
+      if (err1) {
+        return res.status(400).json({ message: err1 });
+      }
+      CountryMaster.find({country_code : response1[0].country_code})
+      .exec((err2, response2) => {
+        if (err2) {
+          return res.status(400).json({ message: err2 });
+        }
+        return res.status(200).send({ data: {state: response1[0].state_name, country: response2[0].country_name } });   
+      });
+    });
   });
 };
 

@@ -72,16 +72,16 @@ exports.save = (req, res) => {
       res.status(500).send({ message: err });
       return;
     }
-    if (response) {
+    if (response.length != 0) {
       return res.status(422).send({ message: "Parameter Code Must Be Unique" });
     } else {
       const parameter = new ParameterMaster(reqestData);
-      parameter.save((err, response) => {
-        if (err) {
-          res.status(500).send({ message: err });
+      parameter.save((err1, response1) => {
+        if (err1) {
+          res.status(500).send({ message: err1 });
           return;
         } else {
-          res.status(200).send({ data: response, message: "Data Saved Successfully In Parameter Master" });
+          res.status(200).send({ data: response1, message: "Data Saved Successfully In Parameter Master" });
           return;
         }
       });

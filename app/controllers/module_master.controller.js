@@ -19,14 +19,23 @@ exports.save = (req, res) => {
         errors: validationResult.errors
     });
   }
-  const module = new ModuleMaster(reqestData);
-  module.save((err, response) => {
+  ModuleMaster.find({module_code : reqestData.module_code, module_name : reqestData.module_name})
+  .exec((err, response) => {
     if (err) {
-    res.status(500).send({ message: err });
-    return;
-    }else {
-    res.status(200).send({ data: response, message: "Data Saved Successfully In Common List Master" });
-    return;    
+      return res.status(400).json({ message: err });
+    }
+    if (response.length != 0) {
+      return res.status(422).json({ message: "Module Code and Module Name Must Be Unique" });
+    }else{
+      const common_list = new ModuleMaster(reqestData);
+      common_list.save((err, response1) => {
+        if (err) {
+        res.status(500).send({ message: err });
+        return;
+        }else {
+        return res.status(200).send({ data: response1, message: "Data Saved Successfully In Module Master" });   
+        }
+      });
     }
   });
 };
@@ -45,7 +54,7 @@ exports.update = (req, res) => {
       res.status(500).send({ message: err });
       return;
     }else{
-      res.status(200).send({ data:response, message: "Data Updated Successfully In Common List Master"  });
+      res.status(200).send({ data:response, message: "Data Updated Successfully In Module Master"  });
       return;
     }
   });
@@ -58,7 +67,7 @@ exports.delete = (req, res) => {
       res.status(500).send({ message: err });
       return;
     }else{
-      res.status(200).send({ message: "Data Deleted In Common List Master"  });
+      res.status(200).send({ message: "Data Deleted In Module Master"  });
       return;
     }
   });
@@ -73,17 +82,19 @@ exports.list = (req, res) => {
   }
   ModuleMaster.find(query)
   .exec((err, response) => {
-    // response.forEach(val => {
-    //   if(val['parent_madule_code'] == Object(val['_id'])){
-    //     console.log(val['module_name'])
-    //     response['parent_module_name'] = val['module_name'];
-    //   }
-    // })
-    if (err) {
-      res.status(500).send({ message: err });
-      return;
-    }
-    res.status(200).send({ data:response, message: "" });
+    ModuleMaster.find(query)
+    .exec((err1, response1) => {
+      response.forEach((val, index) => {
+        if(val['parent_madule_code'] === response1[index]['module_code']){
+          response1[index]['parent_module_name'] = response1[index]['module_name'];
+        }
+      })
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+      res.status(200).send({ data:response1, message: "" });
+    });
   });
 };
 

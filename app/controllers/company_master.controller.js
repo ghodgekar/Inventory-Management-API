@@ -19,14 +19,23 @@ exports.save = (req, res) => {
         errors: validationResult.errors
     });
   }
-  const company = new CompanyMaster(reqestData);
-  company.save((err, response) => {
+  CompanyMaster.find({comp_code : reqestData.comp_code})
+  .exec((err, response) => {
     if (err) {
-    res.status(500).send({ message: err });
-    return;
-    }else {
-    res.status(200).send({ data: response, message: "Data Saved Successfully In company Master" });
-    return;    
+      return res.status(400).json({ message: err });
+    }
+    if (response.length != 0) {
+      return res.status(422).json({ message: "Company Code Must Be Unique" });
+    }else{
+      const common_list = new CompanyMaster(reqestData);
+      common_list.save((err, response1) => {
+        if (err) {
+        res.status(500).send({ message: err });
+        return;
+        }else {
+        return res.status(200).send({ data: response1, message: "Data Saved Successfully In Company Master" });   
+        }
+      });
     }
   });
 };

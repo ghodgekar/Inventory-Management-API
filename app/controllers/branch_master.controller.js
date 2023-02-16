@@ -19,22 +19,23 @@ exports.save = (req, res) => {
         errors: validationResult.errors
     });
   }
-//   BranchMaster.find({list_code : reqestData.list_code})
-//   .exec((err, response) => {
-//     if (err) {
-//       res.status(500).send({ message: err });
-//       return;
-//     }
-//     res.status(200).send({ message: "Common List Code Must Be Unique" });
-//   });
-  const common_list = new BranchMaster(reqestData);
-  common_list.save((err, response) => {
+  BranchMaster.find({loc_code : reqestData.loc_code})
+  .exec((err, response) => {
     if (err) {
-    res.status(500).send({ message: err });
-    return;
-    }else {
-    res.status(200).send({ data: response, message: "Data Saved Successfully In Common List Master" });
-    return;    
+      return res.status(400).json({ message: err });
+    }
+    if (response.length != 0) {
+      return res.status(422).json({ message: "Branch Code Must Be Unique" });
+    }else{
+      const common_list = new BranchMaster(reqestData);
+      common_list.save((err, response1) => {
+        if (err) {
+        res.status(500).send({ message: err });
+        return;
+        }else {
+        return res.status(200).send({ data: response1, message: "Data Saved Successfully In Branch Master" });   
+        }
+      });
     }
   });
 };
@@ -61,7 +62,7 @@ exports.update = (req, res) => {
       res.status(500).send({ message: err });
       return;
     }else{
-      res.status(200).send({ data:response, message: "Data Updated Successfully In Common List Master"  });
+      res.status(200).send({ data:response, message: "Data Updated Successfully In Branch Master"  });
       return;
     }
   });

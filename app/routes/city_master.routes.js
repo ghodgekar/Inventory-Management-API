@@ -8,6 +8,7 @@ module.exports = function(app) {
     next();
   });
   app.get("/api/city/:id?", controller.list);
+  app.get("/api/getStateCountry/:city_name", controller.getStateCountry);
   app.post("/api/city/save", controller.save);
   app.post("/api/city/update", controller.update);
   app.post("/api/city/delete", controller.delete);

@@ -40,16 +40,16 @@ exports.save = (req, res) => {
     if (err) {
       return res.status(400).json({ message: err });
     }
-    if(response){
+    if (response.length != 0) {
       return res.status(422).json({ message: "Common List Code and List Value Must Be Unique" });
     }else{
       const common_list = new CommonListMaster(reqestData);
-      common_list.save((err, response) => {
+      common_list.save((err, response1) => {
         if (err) {
         res.status(500).send({ message: err });
         return;
         }else {
-        return res.status(200).send({ data: response, message: "Data Saved Successfully In Common List Master" });   
+        return res.status(200).send({ data: response1, message: "Data Saved Successfully In Common List Master" });   
         }
       });
     }
