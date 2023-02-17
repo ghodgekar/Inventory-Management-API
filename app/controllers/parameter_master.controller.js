@@ -25,36 +25,44 @@ function validateForm(payload) {
     errors
   };
 }
-exports.datatableList = (req, res) => {
-var searchStr = req.body.search;
-if (req.body.search) {
-  var regex = new RegExp(req.body.search, "i")
-  searchStr = { $or: [{ '_id': regex }, { 'status': regex }, { 'param_code': regex }] };
-}
-else {
-  searchStr = {};
-}
-var recordsTotal = 0;
-var recordsFiltered = 0;
-ParameterMaster.count({}).exec( (err, c) => {
-  recordsTotal = c;
-  ParameterMaster.count({ status: searchStr }).exec((err, c) => {
-    recordsFiltered = c;
-    ParameterMaster.find({ status: searchStr }, '_id status param_code', { 'skip': Number(req.body.start), 'limit': Number(req.body.length) }).exec( (err, results) => {
-      if (err) {
-        return;
-      }
-      var data = JSON.stringify({
-        "draw": req.body.draw,
-        "recordsFiltered": recordsFiltered,
-        "recordsTotal": recordsTotal,
-        "data": results
-      });
-      res.send(data);
-    });
 
+exports.datatableList = (req, res) => {
+  let querySearchId = [];
+  if(req.body.searchId){
+    querySearchId.push({_id: req.body.searchId});
+  }
+  if(req.body.searchStatus){
+    querySearchId.push({status: req.body.searchStatus });
+  }
+  if(req.body.searchParmCode){
+    querySearchId.push({param_code: req.body.searchParmCode });
+  }
+  var recordsTotal    = 0;
+  var recordsFiltered = 0;
+  var limit           = req.body.length;
+  var start           = req.body.start >= 1 ? req.body.start : 1;
+
+  ParameterMaster.count({}).exec( (err, c) => {
+    recordsTotal = c;
+    ParameterMaster.count({ $and: querySearchId }).exec((err, c) => {
+      recordsFiltered = c;
+      if(c == 1){
+        start = start - 1;
+      }
+      ParameterMaster.find({  $and: querySearchId }).limit(limit).skip(start).sort({param_code: 'desc'}).exec( (err, results) => {
+        if (err) {
+          return;
+        }
+        var data = JSON.stringify({
+          "draw"            : req.body.draw,
+          "recordsFiltered" : recordsFiltered,
+          "recordsTotal"    : recordsTotal,
+          "data"            : results
+        });
+        res.send(data);
+      });
+    });
   });
-});
 }
 
 exports.save = (req, res) => {
