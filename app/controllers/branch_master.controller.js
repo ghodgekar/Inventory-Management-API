@@ -102,3 +102,41 @@ exports.list = (req, res) => {
   });
 };
 
+exports.datatableList = (req, res) => {
+  let querySearchId = [];
+  if(req.body.searchId){
+    querySearchId.push({_id: req.body.searchId});
+  }
+  if(req.body.searchStatus){
+    querySearchId.push({status: req.body.searchStatus });
+  }
+  if(req.body.searchLocode){
+    querySearchId.push({loc_code: req.body.searchLocode });
+  }
+  var recordsTotal    = 0;
+  var recordsFiltered = 0;
+  var limit           = req.body.length;
+  var start           = req.body.start >= 1 ? req.body.start : 1;
+
+  BranchMaster.count({}).exec( (err, c) => {
+    recordsTotal = c;
+    BranchMaster.count({ $and: querySearchId }).exec((err, c) => {
+      recordsFiltered = c;
+      if(c == 1){
+        start = start - 1;
+      }
+      BranchMaster.find({  $and: querySearchId }).limit(limit).skip(start).sort({list_code: 'desc'}).exec( (err, results) => {
+        if (err) {
+          return;
+        }
+        var data = JSON.stringify({
+          "draw"            : req.body.draw,
+          "recordsFiltered" : recordsFiltered,
+          "recordsTotal"    : recordsTotal,
+          "data"            : results
+        });
+        res.send(data);
+      });
+    });
+  });
+}

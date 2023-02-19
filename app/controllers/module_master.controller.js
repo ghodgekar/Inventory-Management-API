@@ -148,11 +148,41 @@ exports.parent_menu = (req, res) => {
   });
 };
 
+exports.datatableList = (req, res) => {
+  let querySearchId = [];
+  if(req.body.searchId){
+    querySearchId.push({_id: req.body.searchId});
+  }
+  if(req.body.searchStatus){
+    querySearchId.push({status: req.body.searchStatus });
+  }
+  if(req.body.searchModuleCode){
+    querySearchId.push({module_code: req.body.searchModuleCode });
+  }
+  var recordsTotal    = 0;
+  var recordsFiltered = 0;
+  var limit           = req.body.length;
+  var start           = req.body.start >= 1 ? req.body.start : 1;
 
-
-// exports.test = async (req, res) => {
-//   var initial = ModuleMaster.find();
-//   var menutree = await ModuleMaster.GetMenuTree(initial, null, '5dfe0009551b160edcdc89ce');
-//   res.status(200).send({ data:response, response: "" });
-// };
-
+  ModuleMaster.count({}).exec( (err, c) => {
+    recordsTotal = c;
+    ModuleMaster.count({ $and: querySearchId }).exec((err, c) => {
+      recordsFiltered = c;
+      if(c == 1){
+        start = start - 1;
+      }
+      ModuleMaster.find({  $and: querySearchId }).limit(limit).skip(start).sort({list_code: 'desc'}).exec( (err, results) => {
+        if (err) {
+          return;
+        }
+        var data = JSON.stringify({
+          "draw"            : req.body.draw,
+          "recordsFiltered" : recordsFiltered,
+          "recordsTotal"    : recordsTotal,
+          "data"            : results
+        });
+        res.send(data);
+      });
+    });
+  });
+}
