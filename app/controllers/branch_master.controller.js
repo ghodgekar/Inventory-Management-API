@@ -110,8 +110,59 @@ exports.datatableList = (req, res) => {
   if(req.body.searchStatus){
     querySearchId.push({status: req.body.searchStatus });
   }
-  if(req.body.searchLocode){
-    querySearchId.push({loc_code: req.body.searchLocode });
+  if(req.body.searchLocCode){
+    querySearchId.push({loc_code: req.body.searchLocCode });
+  }
+  if(req.body.searchLocNo){
+    querySearchId.push({loc_no: req.body.searchLocNo });
+  }
+  if(req.body.searchLocName){
+    querySearchId.push({loc_name: req.body.searchLocName });
+  }
+  if(req.body.searchCompCode){
+    querySearchId.push({comp_code: req.body.searchCompCode });
+  }
+  if(req.body.searchAddr1){
+    querySearchId.push({addr1: req.body.searchAddr1 });
+  }
+  if(req.body.searchAddr2){
+    querySearchId.push({addr2: req.body.searchAddr2 });
+  }
+  if(req.body.searchCity){
+    querySearchId.push({city: req.body.searchCity });
+  }
+  if(req.body.searchState){
+    querySearchId.push({state: req.body.searchState });
+  }
+  if(req.body.searchCountry){
+    querySearchId.push({country: req.body.searchCountry });
+  }
+  if(req.body.searchPinCode){
+    querySearchId.push({pincode: req.body.searchPinCode });
+  }
+  if(req.body.searchPhone){
+    querySearchId.push({phone: req.body.searchPhone });
+  }
+  if(req.body.searchGstin){
+    querySearchId.push({gstin: req.body.searchGstin });
+  }
+  if(req.body.searchBankName){
+    querySearchId.push({bank_name: req.body.searchBankName });
+  }
+  if(req.body.searchBankAcNo){
+    querySearchId.push({bank_ac_no: req.body.searchBankAcNo });
+  }
+  if(req.body.searchCreatedBy){
+    querySearchId.push({created_by: req.body.searchCreatedBy });
+  }
+  if(req.body.searchCreatedAt){
+    querySearchId.push({created_at: req.body.searchCreatedAt });
+  }
+  if(req.body.searchUpdatedBy){
+    querySearchId.push({updated_by: req.body.searchUpdatedBy });
+  }
+  if(req.body.searchUpdatedAt){
+    querySearchId.push({updated_at: req.body.searchUpdatedAt });
   }
   var recordsTotal    = 0;
   var recordsFiltered = 0;
@@ -125,7 +176,7 @@ exports.datatableList = (req, res) => {
       if(c == 1){
         start = start - 1;
       }
-      BranchMaster.find({  $and: querySearchId }).limit(limit).skip(start).sort({list_code: 'desc'}).exec( (err, results) => {
+      BranchMaster.find({  $and: querySearchId }).limit(limit).skip(start).sort({loc_code: 'desc'}).exec( (err, results) => {
         if (err) {
           return;
         }

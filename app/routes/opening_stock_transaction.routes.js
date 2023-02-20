@@ -13,5 +13,6 @@ module.exports = function(app) {
   app.post("/api/opening_stock/delete", controller.delete);
 
   app.get("/api/getitemdetials/:barcode?", controller.barcodeList);
+  app.post("/api/opening_stock/datatableList", controller.datatableList);
 
 };

@@ -11,4 +11,5 @@ module.exports = function(app) {
   app.post("/api/tax/save", controller.save);
   app.post("/api/tax/update", controller.update);
   app.post("/api/tax/delete", controller.delete);
+  app.post("/api/tax/datatableList", controller.datatableList);
 };

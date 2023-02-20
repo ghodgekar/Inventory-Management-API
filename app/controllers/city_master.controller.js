@@ -164,6 +164,21 @@ exports.datatableList = (req, res) => {
   if(req.body.searchCityName){
     querySearchId.push({city_name: req.body.searchCityName });
   }
+  if(req.body.searchStateCode){
+    querySearchId.push({state_code: req.body.searchStateCode });
+  }
+  if(req.body.searchCreatedBy){
+    querySearchId.push({created_by: req.body.searchCreatedBy });
+  }
+  if(req.body.searchCreatedAt){
+    querySearchId.push({created_at: req.body.searchCreatedAt });
+  }
+  if(req.body.searchUpdatedBy){
+    querySearchId.push({updated_by: req.body.searchUpdatedBy });
+  }
+  if(req.body.searchUpdatedAt){
+    querySearchId.push({updated_at: req.body.searchUpdatedAt });
+  }
   var recordsTotal    = 0;
   var recordsFiltered = 0;
   var limit           = req.body.length;
@@ -176,7 +191,7 @@ exports.datatableList = (req, res) => {
       if(c == 1){
         start = start - 1;
       }
-      CityMaster.find({  $and: querySearchId }).limit(limit).skip(start).sort({list_code: 'desc'}).exec( (err, results) => {
+      CityMaster.find({  $and: querySearchId }).limit(limit).skip(start).sort({city_name: 'desc'}).exec( (err, results) => {
         if (err) {
           return;
         }

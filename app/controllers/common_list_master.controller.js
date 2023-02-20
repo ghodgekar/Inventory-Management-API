@@ -146,6 +146,30 @@ exports.datatableList = (req, res) => {
   if(req.body.searchListCode){
     querySearchId.push({list_code: req.body.searchListCode });
   }
+  if(req.body.searchListValue){
+    querySearchId.push({list_value: req.body.searchListValue });
+  }
+  if(req.body.searchListDesc){
+    querySearchId.push({list_desc: req.body.searchListDesc });
+  }
+  if(req.body.searchOrderBy){
+    querySearchId.push({order_by: req.body.searchOrderBy });
+  }
+  if(req.body.searchLocCode){
+    querySearchId.push({loc_code: req.body.searchLocCode });
+  }
+  if(req.body.searchCreatedBy){
+    querySearchId.push({created_by: req.body.searchCreatedBy });
+  }
+  if(req.body.searchCreatedAt){
+    querySearchId.push({created_at: req.body.searchCreatedAt });
+  }
+  if(req.body.searchUpdatedBy){
+    querySearchId.push({updated_by: req.body.searchUpdatedBy });
+  }
+  if(req.body.searchUpdatedAt){
+    querySearchId.push({updated_at: req.body.searchUpdatedAt });
+  }
   var recordsTotal    = 0;
   var recordsFiltered = 0;
   var limit           = req.body.length;

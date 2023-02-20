@@ -127,3 +127,65 @@ exports.excel = (req, res) => {
   });
 };
 
+exports.datatableList = (req, res) => {
+  let querySearchId = [];
+  if(req.body.searchId){
+    querySearchId.push({_id: req.body.searchId});
+  }
+  if(req.body.searchStatus){
+    querySearchId.push({status: req.body.searchStatus });
+  }
+  if(req.body.searchCatCode){
+    querySearchId.push({category_code: req.body.searchCatCode });
+  }
+  if(req.body.searchCatName){
+    querySearchId.push({category_name: req.body.searchCatName });
+  }
+  if(req.body.searchCatType){
+    querySearchId.push({category_type: req.body.searchCatType });
+  }
+  if(req.body.searchGrp){
+    querySearchId.push({group: req.body.searchGrp });
+  }
+  if(req.body.searchInventory){
+    querySearchId.push({inventory: req.body.searchInventory });
+  }
+  if(req.body.searchCreatedBy){
+    querySearchId.push({created_by: req.body.searchCreatedBy });
+  }
+  if(req.body.searchCreatedAt){
+    querySearchId.push({created_at: req.body.searchCreatedAt });
+  }
+  if(req.body.searchUpdatedBy){
+    querySearchId.push({updated_by: req.body.searchUpdatedBy });
+  }
+  if(req.body.searchUpdatedAt){
+    querySearchId.push({updated_at: req.body.searchUpdatedAt });
+  }
+  var recordsTotal    = 0;
+  var recordsFiltered = 0;
+  var limit           = req.body.length;
+  var start           = req.body.start >= 1 ? req.body.start : 1;
+
+  CategoryMaster.count({}).exec( (err, c) => {
+    recordsTotal = c;
+    CategoryMaster.count({ $and: querySearchId }).exec((err, c) => {
+      recordsFiltered = c;
+      if(c == 1){
+        start = start - 1;
+      }
+      CategoryMaster.find({  $and: querySearchId }).limit(limit).skip(start).sort({category_code: 'desc'}).exec( (err, results) => {
+        if (err) {
+          return;
+        }
+        var data = JSON.stringify({
+          "draw"            : req.body.draw,
+          "recordsFiltered" : recordsFiltered,
+          "recordsTotal"    : recordsTotal,
+          "data"            : results
+        });
+        res.send(data);
+      });
+    });
+  });
+}

@@ -135,6 +135,18 @@ exports.datatableList = (req, res) => {
   if(req.body.searchCompCode){
     querySearchId.push({comp_code: req.body.searchCompCode });
   }
+  if(req.body.searchCreatedBy){
+    querySearchId.push({created_by: req.body.searchCreatedBy });
+  }
+  if(req.body.searchCreatedAt){
+    querySearchId.push({created_at: req.body.searchCreatedAt });
+  }
+  if(req.body.searchUpdatedBy){
+    querySearchId.push({updated_by: req.body.searchUpdatedBy });
+  }
+  if(req.body.searchUpdatedAt){
+    querySearchId.push({updated_at: req.body.searchUpdatedAt });
+  }
   var recordsTotal    = 0;
   var recordsFiltered = 0;
   var limit           = req.body.length;
@@ -147,7 +159,7 @@ exports.datatableList = (req, res) => {
       if(c == 1){
         start = start - 1;
       }
-      CompanyMaster.find({  $and: querySearchId }).limit(limit).skip(start).sort({list_code: 'desc'}).exec( (err, results) => {
+      CompanyMaster.find({  $and: querySearchId }).limit(limit).skip(start).sort({comp_code: 'desc'}).exec( (err, results) => {
         if (err) {
           return;
         }

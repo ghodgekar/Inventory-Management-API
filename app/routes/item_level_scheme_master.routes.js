@@ -11,4 +11,5 @@ module.exports = function(app) {
   app.post("/api/item_level_scheme/save", controller.save);
   app.post("/api/item_level_scheme/update", controller.update);
   app.post("/api/item_level_scheme/delete", controller.delete);
+  app.post("/api/item_level_scheme/datatableList", controller.datatableList);
 };

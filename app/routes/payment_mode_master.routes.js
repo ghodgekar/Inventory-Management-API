@@ -11,4 +11,5 @@ module.exports = function(app) {
   app.post("/api/payment_mode/save", controller.save);
   app.post("/api/payment_mode/update", controller.update);
   app.post("/api/payment_mode/delete", controller.delete);
+  app.post("/api/payment_mode/datatableList", controller.datatableList);
 };

@@ -138,6 +138,18 @@ exports.datatableList = (req, res) => {
   if(req.body.searchUserCode){
     querySearchId.push({user_code: req.body.searchUserCode });
   }
+  if(req.body.searchCreatedBy){
+    querySearchId.push({created_by: req.body.searchCreatedBy });
+  }
+  if(req.body.searchCreatedAt){
+    querySearchId.push({created_at: req.body.searchCreatedAt });
+  }
+  if(req.body.searchUpdatedBy){
+    querySearchId.push({updated_by: req.body.searchUpdatedBy });
+  }
+  if(req.body.searchUpdatedAt){
+    querySearchId.push({updated_at: req.body.searchUpdatedAt });
+  }
   var recordsTotal    = 0;
   var recordsFiltered = 0;
   var limit           = req.body.length;
@@ -150,7 +162,7 @@ exports.datatableList = (req, res) => {
       if(c == 1){
         start = start - 1;
       }
-      UserPermissionMaster.find({  $and: querySearchId }).limit(limit).skip(start).sort({list_code: 'desc'}).exec( (err, results) => {
+      UserPermissionMaster.find({  $and: querySearchId }).limit(limit).skip(start).sort({user_code: 'desc'}).exec( (err, results) => {
         if (err) {
           return;
         }

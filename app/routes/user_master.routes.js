@@ -11,4 +11,5 @@ module.exports = function(app) {
   app.post("/api/user/save", controller.save);
   app.post("/api/user/update", controller.update);
   app.post("/api/user/delete", controller.delete);
+  app.post("/api/user/datatableList", controller.datatableList);
 };

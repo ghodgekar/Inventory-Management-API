@@ -143,3 +143,53 @@ exports.excel = (req, res) => {
   });
 };
 
+exports.datatableList = (req, res) => {
+  let querySearchId = [];
+  if(req.body.searchId){
+    querySearchId.push({_id: req.body.searchId});
+  }
+  if(req.body.searchStatus){
+    querySearchId.push({status: req.body.searchStatus });
+  }
+  if(req.body.searchManfCode){
+    querySearchId.push({manufact_code: req.body.searchManfCode });
+  }
+  if(req.body.searchCreatedBy){
+    querySearchId.push({created_by: req.body.searchCreatedBy });
+  }
+  if(req.body.searchCreatedAt){
+    querySearchId.push({created_at: req.body.searchCreatedAt });
+  }
+  if(req.body.searchUpdatedBy){
+    querySearchId.push({updated_by: req.body.searchUpdatedBy });
+  }
+  if(req.body.searchUpdatedAt){
+    querySearchId.push({updated_at: req.body.searchUpdatedAt });
+  }
+  var recordsTotal    = 0;
+  var recordsFiltered = 0;
+  var limit           = req.body.length;
+  var start           = req.body.start >= 1 ? req.body.start : 1;
+
+  ManufracturerMaster.count({}).exec( (err, c) => {
+    recordsTotal = c;
+    ManufracturerMaster.count({ $and: querySearchId }).exec((err, c) => {
+      recordsFiltered = c;
+      if(c == 1){
+        start = start - 1;
+      }
+      ManufracturerMaster.find({  $and: querySearchId }).limit(limit).skip(start).sort({manufact_code: 'desc'}).exec( (err, results) => {
+        if (err) {
+          return;
+        }
+        var data = JSON.stringify({
+          "draw"            : req.body.draw,
+          "recordsFiltered" : recordsFiltered,
+          "recordsTotal"    : recordsTotal,
+          "data"            : results
+        });
+        res.send(data);
+      });
+    });
+  });
+}

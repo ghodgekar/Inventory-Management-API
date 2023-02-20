@@ -152,8 +152,20 @@ exports.datatableList = (req, res) => {
   if(req.body.searchStatus){
     querySearchId.push({status: req.body.searchStatus });
   }
-  if(req.body.searchStateName){
-    querySearchId.push({state_name: req.body.searchStateName });
+  if(req.body.searchStateCode){
+    querySearchId.push({state_name: req.body.searchStateCode });
+  }
+  if(req.body.searchCreatedBy){
+    querySearchId.push({created_by: req.body.searchCreatedBy });
+  }
+  if(req.body.searchCreatedAt){
+    querySearchId.push({created_at: req.body.searchCreatedAt });
+  }
+  if(req.body.searchUpdatedBy){
+    querySearchId.push({updated_by: req.body.searchUpdatedBy });
+  }
+  if(req.body.searchUpdatedAt){
+    querySearchId.push({updated_at: req.body.searchUpdatedAt });
   }
   var recordsTotal    = 0;
   var recordsFiltered = 0;
@@ -167,7 +179,7 @@ exports.datatableList = (req, res) => {
       if(c == 1){
         start = start - 1;
       }
-      StateMaster.find({  $and: querySearchId }).limit(limit).skip(start).sort({list_code: 'desc'}).exec( (err, results) => {
+      StateMaster.find({  $and: querySearchId }).limit(limit).skip(start).sort({state_code: 'desc'}).exec( (err, results) => {
         if (err) {
           return;
         }

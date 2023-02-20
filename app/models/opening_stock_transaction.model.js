@@ -16,9 +16,9 @@ const OpeningStockTransaction = mongoose.model(
     comp_code: String,
     status: {type: String, default: 'Active'},
     created_by: String,
-    created_at: {type: Number, default: Date.now},
+    created_at: {type: Date, default: Date.now},
     updated_by: {type: String, default: null},
-    updated_at: {type: Number, default: Date.now}
+    updated_at: {type: Date, default: Date.now}
   },{
     versionKey: false
   })
