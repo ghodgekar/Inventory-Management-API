@@ -3,25 +3,11 @@ const CountryMaster = db.country_master;
 const Joi = require('joi');
 
 function validateForm(payload) {
-  const schema = Joi.object({
-    country_code: Joi.string().regex(/^[A-Z]+$/).required(),
-    country_name: Joi.string().regex(/^[A-Z][a-zA-Z]*$/).required(),
-    currency_code: Joi.required(),
-  });
-
-  const { error } = schema.validate(payload);
-
   let errors = {};
-  if (error) {
-    isFormValid = false;
-    error.details.forEach((err) => {
-      errors[err.context.key] = err.message;
-    });
-  }
-
+  let isFormValid = true;
   return {
-    success: isFormValid,
-    errors,
+      success: isFormValid,
+      errors
   };
 }
 
@@ -177,7 +163,7 @@ exports.datatableList = (req, res) => {
       if(c == 1){
         start = start - 1;
       }
-      CountryMaster.find({  $and: querySearchId }).limit(limit).skip(start).sort({country_name: 'desc'}).exec( (err, results) => {
+      CountryMaster.find({  $and: querySearchId }).limit(limit).skip(start).sort({country_code: 'desc'}).exec( (err, results) => {
         if (err) {
           return;
         }
