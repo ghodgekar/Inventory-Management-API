@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const fileupload = require("express-fileupload");
 const app = express();
 var corsOptions = {
-  origin: "http://localhost:4200"
+  origin: "http://localhost:62390"
 };
 app.use('/uploads', express.static('uploads'));
 

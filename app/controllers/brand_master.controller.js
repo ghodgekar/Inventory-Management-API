@@ -19,22 +19,23 @@ exports.save = (req, res) => {
         errors: validationResult.errors
     });
   }
-  // BrandMaster.find({param_code : reqestData.param_code})
-  // .exec((err, response) => {
-  //   if (err) {
-  //     res.status(500).send({ message: err });
-  //     return;
-  //   }
-  //   res.status(200).send({ message: "brand Code Must Be Unique" });
-  // });
-  const brand = new BrandMaster(reqestData);
-  brand.save((err, response) => {
+  BrandMaster.find({param_code : reqestData.param_code})
+  .exec((err, response) => {
     if (err) {
-    res.status(500).send({ message: err });
-    return;
-    }else {
-    res.status(200).send({ data: response, message: "Data Saved Successfully In brand Master" });
-    return;    
+      return res.status(400).json({ message: err });
+    }
+    if (response.length != 0) {
+      return res.status(422).json({ message: "Brand Code Must Be Unique" });
+    }else{
+      const common_list = new BrandMaster(reqestData);
+      common_list.save((err, response1) => {
+        if (err) {
+        res.status(500).send({ message: err });
+        return;
+        }else {
+        return res.status(200).send({ data: response1, message: "Data Saved Successfully In Brand Master" });   
+        }
+      });
     }
   });
 };
@@ -61,7 +62,7 @@ exports.update = (req, res) => {
       res.status(500).send({ message: err });
       return;
     }else{
-      res.status(200).send({ data:response, message: "Data Updated Successfully In brand Master"  });
+      res.status(200).send({ data:response, message: "Data Updated Successfully In Brand Master"  });
       return;
     }
   });
@@ -74,7 +75,7 @@ exports.delete = (req, res) => {
       res.status(500).send({ message: err });
       return;
     }else{
-      res.status(200).send({ message: "Data Deleted In brand Master"  });
+      res.status(200).send({ message: "Data Deleted In Brand Master"  });
       return;
     }
   });
